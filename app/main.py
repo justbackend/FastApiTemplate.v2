@@ -4,9 +4,6 @@ from fastapi import FastAPI, Depends
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 
-from app.api.nonsense import router as nonsense_router
-from app.api.shakespeare import router as shakespeare_router
-from app.api.stuff import router as stuff_router
 from app.utils.logging import AppLogger
 from app.api.user import router as user_router
 from app.api.health import router as health_router
@@ -34,9 +31,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Stuff And Nonsense API", version="0.6", lifespan=lifespan)
 
-app.include_router(stuff_router)
-app.include_router(nonsense_router)
-app.include_router(shakespeare_router)
 app.include_router(user_router)
 
 
