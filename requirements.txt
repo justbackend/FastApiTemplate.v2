@@ -1,0 +1,10 @@
+pydantic-settings
+passlib[bcrypt]
+fastapi
+SQLAlchemy
+asyncpg
+PyJWT
+
+pydantic~=2.7.1
+pydantic_core~=2.18.2
+bcrypt~=4.1.2
