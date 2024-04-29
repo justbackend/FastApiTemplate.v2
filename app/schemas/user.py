@@ -8,6 +8,9 @@ config = ConfigDict(from_attributes=True)
 # TODO: add pydantic field validator for strong password
 class UserSchema(BaseModel):
     model_config = config
+    username: str = Field(
+        title="User’s username", description="User’s username", examples=["justme001"]
+    )
     email: EmailStr = Field(
         title="User’s email", description="User’s email", examples=["john@domain.com"]
     )
@@ -26,6 +29,7 @@ class UserSchema(BaseModel):
 
 class UserResponse(BaseModel):
     id: UUID = Field(title="User’s id", description="User’s id")
+    username: str = Field(title="User’s username", description="User’s username")
     email: EmailStr = Field(title="User’s email", description="User’s email")
     first_name: str = Field(title="User’s first name", description="User’s first name")
     last_name: str = Field(title="User’s last name", description="User’s last name")
@@ -41,8 +45,8 @@ class TokenResponse(BaseModel):
 
 class UserLogin(BaseModel):
     model_config = config
-    email: EmailStr = Field(
-        title="User’s email", description="User’s email", examples=["john@domain.com"]
+    username: str = Field(
+        title="User’s username", description="User’s username", examples=['username001']
     )
     password: SecretStr = Field(
         title="User’s password",

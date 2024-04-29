@@ -31,7 +31,7 @@ async def create_user(
 async def get_token_for_user(
     user: UserLogin, request: Request, db_session: AsyncSession = Depends(get_db)
 ):
-    _user: User = await User.find(db_session, [User.email == user.email])
+    _user: User = await User.find(db_session, [User.username == user.username])
 
     # TODO: out exception handling to external module
     if not _user:

@@ -43,7 +43,7 @@ class AuthBearer(HTTPBearer):
 async def create_access_token(user: User, request: Request):
     # sourcery skip: avoid-builtin-shadow
     payload = {
-        "email": user.email,
+        "username": user.username,
         "expiry": time.time() + global_settings.jwt_expire,
         "platform": request.headers.get("User-Agent"),
     }

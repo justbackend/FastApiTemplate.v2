@@ -4,6 +4,8 @@ from fastapi import FastAPI, Depends
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 
+from app.database import engine
+from app.models import Base
 from app.utils.logging import AppLogger
 from app.api.user import router as user_router
 from app.api.health import router as health_router
@@ -17,7 +19,8 @@ logger = AppLogger().get_logger()
 async def lifespan(app: FastAPI):
     # Load the redis connection
     app.state.redis = await get_redis()
-
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(Base.metadata.create_all)
     try:
         # Initialize the cache with the redis connection
         redis_cache = await get_cache()
@@ -30,6 +33,12 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Stuff And Nonsense API", version="0.6", lifespan=lifespan)
+
+
+@app.on_event("startup")
+async def on_startup():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 app.include_router(user_router)
 
